@@ -64,9 +64,9 @@ public class TemperatureScheduler implements IScheduler {
                 SecondarySkill secondarySkill = new SecondarySkill(0, null, null, null, null, null, map);
                 whatsappTemplate.setEnv(schedulerSkillClient, null, secondarySkill);
 
-                map.put("loginPhone", "4915732538949");
-                map.put("loginPassphrase", "e/wN4yZaVy0ZGBFjXm4o17Pz0QU=");
-                map.put("receiverPhone", "4917634459132");
+                map.put("loginPhone", "x");
+                map.put("loginPassphrase", "x");
+                map.put("receiverPhone", "x");
 
                 if (hotCore >= heat[1]){
                     if (hotCore >= heat[2]){

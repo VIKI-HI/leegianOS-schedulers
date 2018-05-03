@@ -11,10 +11,10 @@
 package schedulers;
 
 import de.linzn.leegianOS.LeegianOSApp;
-import de.linzn.leegianOS.internal.ifaces.IScheduler;
-import de.linzn.leegianOS.internal.lifeObjects.SchedulerSkillClient;
-import de.linzn.leegianOS.internal.lifeObjects.SubSkill;
-import de.linzn.leegianOS.internal.lifeObjects.TimeData;
+import de.linzn.leegianOS.internal.interfaces.IScheduler;
+import de.linzn.leegianOS.internal.objectDatabase.TimeData;
+import de.linzn.leegianOS.internal.objectDatabase.clients.SchedulerSkillClient;
+import de.linzn.leegianOS.internal.objectDatabase.skillType.SubSkill;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import skills.ComputerTemplate;

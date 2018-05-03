@@ -14,7 +14,7 @@ import de.linzn.leegianOS.LeegianOSApp;
 import de.linzn.leegianOS.internal.interfaces.IScheduler;
 import de.linzn.leegianOS.internal.objectDatabase.TimeData;
 import de.linzn.leegianOS.internal.objectDatabase.clients.SchedulerSkillClient;
-import de.linzn.leegianOS.internal.objectDatabase.skillType.SubSkill;
+import de.linzn.leegianOS.internal.objectDatabase.skillType.SecondarySkill;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import skills.ComputerTemplate;
@@ -37,8 +37,8 @@ public class TemperatureScheduler implements IScheduler {
             SchedulerSkillClient schedulerSkillClient = (SchedulerSkillClient) LeegianOSApp.leegianOSAppInstance.skillClientList.get(schedulerUUID());
             ComputerTemplate computerTemplate = new ComputerTemplate();
             Map map = new HashMap();
-            SubSkill subSkill = new SubSkill(0, null, null, null, null, null, map);
-            computerTemplate.setEnv(schedulerSkillClient, null, subSkill);
+        SecondarySkill secondarySkill = new SecondarySkill(0, null, null, null, null, null, map);
+        computerTemplate.setEnv(schedulerSkillClient, null, secondarySkill);
 
             map.put("hostName", "10.40.0.20");
             computerTemplate.getSystemTemperature();
@@ -61,12 +61,12 @@ public class TemperatureScheduler implements IScheduler {
                 SchedulerSkillClient schedulerSkillClient = (SchedulerSkillClient) LeegianOSApp.leegianOSAppInstance.skillClientList.get(schedulerUUID());
                 WhatsappTemplate whatsappTemplate = new WhatsappTemplate();
                 Map map = new HashMap();
-                SubSkill subSkill = new SubSkill(0, null, null, null, null, null, map);
-                whatsappTemplate.setEnv(schedulerSkillClient, null, subSkill);
+                SecondarySkill secondarySkill = new SecondarySkill(0, null, null, null, null, null, map);
+                whatsappTemplate.setEnv(schedulerSkillClient, null, secondarySkill);
 
-                map.put("loginPhone", "x");
-                map.put("loginPassphrase", "x");
-                map.put("receiverPhone", "x");
+                map.put("loginPhone", "4915732538949");
+                map.put("loginPassphrase", "e/wN4yZaVy0ZGBFjXm4o17Pz0QU=");
+                map.put("receiverPhone", "4917634459132");
 
                 if (hotCore >= heat[1]){
                     if (hotCore >= heat[2]){

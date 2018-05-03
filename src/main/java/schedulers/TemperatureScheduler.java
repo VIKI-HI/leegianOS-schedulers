@@ -1,12 +1,11 @@
 /*
- * Copyright (C) 2017. Niklas Linz - All Rights Reserved
+ * Copyright (C) 2018. Niklas Linz - All Rights Reserved
  * You may use, distribute and modify this code under the
  * terms of the LGPLv3 license, which unfortunately won't be
  * written for another century.
  *
  * You should have received a copy of the LGPLv3 license with
  * this file. If not, please write to: niklas.linz@enigmar.de
- *
  */
 
 package schedulers;
@@ -15,7 +14,6 @@ import de.linzn.leegianOS.LeegianOSApp;
 import de.linzn.leegianOS.internal.ifaces.IScheduler;
 import de.linzn.leegianOS.internal.lifeObjects.SchedulerSkillClient;
 import de.linzn.leegianOS.internal.lifeObjects.SubSkill;
-import de.linzn.whatsappApi.WhatsappClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import skills.ComputerTemplate;
@@ -70,18 +68,18 @@ public class TemperatureScheduler implements IScheduler {
                 SubSkill subSkill = new SubSkill(0, null, null, null, null, null, map);
                 whatsappTemplate.setEnv(schedulerSkillClient, null, subSkill);
 
-                map.put("loginPhone", "xxx");
-                map.put("loginPassphrase", "xxx");
-                map.put("receiverPhone", "xxx");
+                map.put("loginPhone", "x");
+                map.put("loginPassphrase", "x");
+                map.put("receiverPhone", "x");
 
                 if (hotCore >= heat[1]){
                     if (hotCore >= heat[2]){
                         map.put("message", "CRITICAL: Core temp over " + hotCore + "°C");
                     } else {
-                        map.put("message", "WARNING: Core over " + hotCore + "°C");
+                        map.put("message", "WARNING: Core temp over " + hotCore + "°C");
                     }
                 } else {
-                    map.put("message", "INFO: Core over " + hotCore + "°C");
+                    map.put("message", "INFO: Core temp over " + hotCore + "°C");
                 }
                 whatsappTemplate.sendPhoneMessage();
             }

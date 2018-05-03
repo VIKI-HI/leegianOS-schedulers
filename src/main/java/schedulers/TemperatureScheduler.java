@@ -29,7 +29,7 @@ public class TemperatureScheduler implements IScheduler {
 
     private boolean terminated = false;
     private LinkedList<JSONObject> data = new LinkedList<>();
-    private int[] heat = {30, 70, 80};
+    private int[] heat = {65, 70, 80};
     private String testNumber = "";
 
     @Override
@@ -68,9 +68,9 @@ public class TemperatureScheduler implements IScheduler {
                 SubSkill subSkill = new SubSkill(0, null, null, null, null, null, map);
                 whatsappTemplate.setEnv(schedulerSkillClient, null, subSkill);
 
-                map.put("loginPhone", "x");
-                map.put("loginPassphrase", "x");
-                map.put("receiverPhone", "x");
+                map.put("loginPhone", "4915732538949");
+                map.put("loginPassphrase", "e/wN4yZaVy0ZGBFjXm4o17Pz0QU=");
+                map.put("receiverPhone", "4917634459132");
 
                 if (hotCore >= heat[1]){
                     if (hotCore >= heat[2]){

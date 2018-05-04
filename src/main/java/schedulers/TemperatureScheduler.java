@@ -11,7 +11,9 @@
 package schedulers;
 
 import de.linzn.leegianOS.LeegianOSApp;
+import de.linzn.leegianOS.internal.databaseAccess.GetSetting;
 import de.linzn.leegianOS.internal.interfaces.IScheduler;
+import de.linzn.leegianOS.internal.objectDatabase.OBJSetting;
 import de.linzn.leegianOS.internal.objectDatabase.TimeData;
 import de.linzn.leegianOS.internal.objectDatabase.clients.SchedulerSkillClient;
 import de.linzn.leegianOS.internal.objectDatabase.skillType.SecondarySkill;
@@ -34,29 +36,31 @@ public class TemperatureScheduler implements IScheduler {
 
     @Override
     public void scheduler() {
-            SchedulerSkillClient schedulerSkillClient = (SchedulerSkillClient) LeegianOSApp.leegianOSAppInstance.skillClientList.get(schedulerUUID());
-            ComputerTemplate computerTemplate = new ComputerTemplate();
-            Map map = new HashMap();
+        SchedulerSkillClient schedulerSkillClient = (SchedulerSkillClient) LeegianOSApp.leegianOSAppInstance.skillClientList.get(schedulerUUID());
+        ComputerTemplate computerTemplate = new ComputerTemplate();
+        Map map = new HashMap();
         SecondarySkill secondarySkill = new SecondarySkill(0, null, null, null, null, null, map);
         computerTemplate.setEnv(schedulerSkillClient, null, secondarySkill);
 
-            map.put("hostName", "10.40.0.20");
-            computerTemplate.getSystemTemperature();
+        OBJSetting objSetting = new GetSetting("temperature.hostSystem").getSetting();
+        map.put("hostName", objSetting.dataObject.getString("host_name"));
+        computerTemplate.getSystemTemperature();
     }
 
     @Override
     public void loopback() {
+
         if (!data.isEmpty()) {
             JSONObject jsonObject = data.removeFirst();
             JSONArray jsonArray = jsonObject.getJSONObject("dataValues").getJSONArray("temperatures");
             double hotCore = -1;
-            for (int i = 0; i < jsonArray.length(); i++){
+            for (int i = 0; i < jsonArray.length(); i++) {
                 double value = jsonArray.getDouble(i);
-                if (hotCore < value){
+                if (hotCore < value) {
                     hotCore = value;
                 }
             }
-            if (hotCore >= heat[0]){
+            if (hotCore >= heat[0]) {
 
                 SchedulerSkillClient schedulerSkillClient = (SchedulerSkillClient) LeegianOSApp.leegianOSAppInstance.skillClientList.get(schedulerUUID());
                 WhatsappTemplate whatsappTemplate = new WhatsappTemplate();
@@ -64,12 +68,14 @@ public class TemperatureScheduler implements IScheduler {
                 SecondarySkill secondarySkill = new SecondarySkill(0, null, null, null, null, null, map);
                 whatsappTemplate.setEnv(schedulerSkillClient, null, secondarySkill);
 
-                map.put("loginPhone", "x");
-                map.put("loginPassphrase", "x");
-                map.put("receiverPhone", "x");
 
-                if (hotCore >= heat[1]){
-                    if (hotCore >= heat[2]){
+                OBJSetting objSetting = new GetSetting("temperature.phone").getSetting();
+                map.put("loginPhone", objSetting.dataObject.getString("login_phone"));
+                map.put("loginPassphrase", objSetting.dataObject.getString("login_passphrase"));
+                map.put("receiverPhone", objSetting.dataObject.getString("receiver_number"));
+
+                if (hotCore >= heat[1]) {
+                    if (hotCore >= heat[2]) {
                         map.put("message", "CRITICAL: Core temp over " + hotCore + "°C");
                     } else {
                         map.put("message", "WARNING: Core temp over " + hotCore + "°C");

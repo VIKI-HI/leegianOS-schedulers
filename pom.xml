@@ -33,10 +33,10 @@
     <artifactId>leegianOS-schedulers</artifactId>
     <dependencies>
         <dependency>
-        <groupId>de.linzn</groupId>
-        <artifactId>leegianOS</artifactId>
-        <version>1.0.2</version>
-    </dependency>
+            <groupId>de.linzn</groupId>
+            <artifactId>leegianOS</artifactId>
+            <version>1.0.2</version>
+        </dependency>
         <dependency>
             <groupId>de.linzn</groupId>
             <artifactId>leegianOS-skills</artifactId>

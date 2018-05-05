@@ -36,6 +36,7 @@ public class TemperatureScheduler implements IScheduler {
 
     @Override
     public void scheduler() {
+
         SchedulerSkillClient schedulerSkillClient = (SchedulerSkillClient) LeegianOSApp.leegianOSAppInstance.skillClientList.get(schedulerUUID());
         ComputerTemplate computerTemplate = new ComputerTemplate();
         Map map = new HashMap();

@@ -42,7 +42,7 @@ public class TemperatureScheduler implements IScheduler {
         SecondarySkill secondarySkill = new SecondarySkill(0, null, null, null, null, null, map);
         computerTemplate.setEnv(schedulerSkillClient, null, secondarySkill);
 
-        OBJSetting objSetting = new GetSetting("temperature.hostSystem").getSetting();
+        OBJSetting objSetting = new GetSetting("scheduler.temperature.hostSystem").getSetting();
         map.put("hostName", objSetting.dataObject.getString("host_name"));
         computerTemplate.getSystemTemperature();
     }
@@ -61,15 +61,13 @@ public class TemperatureScheduler implements IScheduler {
                 }
             }
             if (hotCore >= heat[0]) {
-
                 SchedulerSkillClient schedulerSkillClient = (SchedulerSkillClient) LeegianOSApp.leegianOSAppInstance.skillClientList.get(schedulerUUID());
                 WhatsappTemplate whatsappTemplate = new WhatsappTemplate();
                 Map map = new HashMap();
                 SecondarySkill secondarySkill = new SecondarySkill(0, null, null, null, null, null, map);
                 whatsappTemplate.setEnv(schedulerSkillClient, null, secondarySkill);
 
-
-                OBJSetting objSetting = new GetSetting("temperature.phone").getSetting();
+                OBJSetting objSetting = new GetSetting("scheduler.temperature.phone").getSetting();
                 map.put("loginPhone", objSetting.dataObject.getString("login_phone"));
                 map.put("loginPassphrase", objSetting.dataObject.getString("login_passphrase"));
                 map.put("receiverPhone", objSetting.dataObject.getString("receiver_number"));

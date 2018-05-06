@@ -93,11 +93,6 @@ public class TemperatureScheduler implements IScheduler {
     }
 
     @Override
-    public TimeData loopBack_timer() {
-        return new TimeData(100, 100, TimeUnit.MILLISECONDS);
-    }
-
-    @Override
     public void addAnswerData(JSONObject json) {
         this.data.add(json);
     }

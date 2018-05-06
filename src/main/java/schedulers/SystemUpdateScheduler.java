@@ -15,6 +15,7 @@ import de.linzn.leegianOS.internal.databaseAccess.GetSetting;
 import de.linzn.leegianOS.internal.interfaces.IScheduler;
 import de.linzn.leegianOS.internal.objectDatabase.OBJSetting;
 import de.linzn.leegianOS.internal.objectDatabase.TimeData;
+import de.linzn.leegianOS.internal.objectDatabase.TimedTimeData;
 import de.linzn.leegianOS.internal.objectDatabase.clients.SchedulerSkillClient;
 import de.linzn.leegianOS.internal.objectDatabase.skillType.SecondarySkill;
 import org.json.JSONObject;
@@ -24,7 +25,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 public class SystemUpdateScheduler implements IScheduler {
 
@@ -68,13 +68,9 @@ public class SystemUpdateScheduler implements IScheduler {
 
     @Override
     public TimeData scheduler_timer() {
-        return new TimeData(1, 12, TimeUnit.HOURS);
+        return new TimedTimeData(0, 2, 0);
     }
 
-    @Override
-    public TimeData loopBack_timer() {
-        return new TimeData(100, 100, TimeUnit.MILLISECONDS);
-    }
 
     @Override
     public void addAnswerData(JSONObject json) {

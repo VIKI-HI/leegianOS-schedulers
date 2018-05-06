@@ -33,6 +33,7 @@ public class TemperatureScheduler implements IScheduler {
     private boolean alive = false;
     private LinkedList<JSONObject> data = new LinkedList<>();
     private int[] heat = {65, 70, 80};
+    private int last = 0;
 
     @Override
     public void scheduler() {
@@ -75,14 +76,43 @@ public class TemperatureScheduler implements IScheduler {
 
                 if (hotCore >= heat[1]) {
                     if (hotCore >= heat[2]) {
-                        map.put("message", "CRITICAL: Core temp over " + hotCore + "°C");
+                        if (last < 3) {
+                            last = 3;
+                            map.put("message", "Die Temperatur des Hostsystems liegt mit " + hotCore + "°C im kritischen Bereich!");
+                            whatsappTemplate.sendPhoneMessage();
+                        }
                     } else {
-                        map.put("message", "WARNING: Core temp over " + hotCore + "°C");
+                        if (last < 2) {
+                            last = 2;
+                            map.put("message", "Die Temperatur des Prozessors ist gefährlich heiß. " + hotCore + "°C");
+                            whatsappTemplate.sendPhoneMessage();
+                        }
                     }
                 } else {
-                    map.put("message", "INFO: Core temp over " + hotCore + "°C");
+                    if (last < 1) {
+                        last = 1;
+                        map.put("message", "Der Prozessor des Hostsystems ist mit " + hotCore + "°C ungewöhnlich heiß.");
+                        whatsappTemplate.sendPhoneMessage();
+                    }
                 }
-                whatsappTemplate.sendPhoneMessage();
+            } else {
+
+                if (last > 0) {
+                    last = 0;
+                    SchedulerSkillClient schedulerSkillClient = (SchedulerSkillClient) LeegianOSApp.leegianOSAppInstance.skillClientList.get(schedulerUUID());
+                    WhatsappTemplate whatsappTemplate = new WhatsappTemplate();
+                    Map map = new HashMap();
+                    SecondarySkill secondarySkill = new SecondarySkill(0, null, null, null, null, null, map);
+                    whatsappTemplate.setEnv(schedulerSkillClient, null, secondarySkill);
+
+                    OBJSetting objSetting = new GetSetting("scheduler.temperature.phone").getSetting();
+                    map.put("loginPhone", objSetting.dataObject.getString("login_phone"));
+                    map.put("loginPassphrase", objSetting.dataObject.getString("login_passphrase"));
+                    map.put("receiverPhone", objSetting.dataObject.getString("receiver_number"));
+
+                    map.put("message", "Die Temperatur des Prozessors ist wieder normal. " + hotCore + "°C");
+                    whatsappTemplate.sendPhoneMessage();
+                }
             }
         }
     }

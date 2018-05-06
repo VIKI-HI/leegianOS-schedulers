@@ -20,6 +20,7 @@ import de.linzn.leegianOS.internal.objectDatabase.clients.SchedulerSkillClient;
 import de.linzn.leegianOS.internal.objectDatabase.skillType.SecondarySkill;
 import org.json.JSONObject;
 import skills.UnixTemplate;
+import skills.WhatsappTemplate;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -61,7 +62,18 @@ public class SystemUpdateScheduler implements IScheduler {
             String hostname = jsonObject.getJSONObject("dataValues").getString("hostname");
 
             if (exitCode != 0) {
-                System.out.println("ExitCode: " + exitCode);
+                SchedulerSkillClient schedulerSkillClient = (SchedulerSkillClient) LeegianOSApp.leegianOSAppInstance.skillClientList.get(schedulerUUID());
+                WhatsappTemplate whatsappTemplate = new WhatsappTemplate();
+                Map map = new HashMap();
+                SecondarySkill secondarySkill = new SecondarySkill(0, null, null, null, null, null, map);
+                whatsappTemplate.setEnv(schedulerSkillClient, null, secondarySkill);
+
+                OBJSetting objSetting = new GetSetting("scheduler.systemupdate.phone").getSetting();
+                map.put("loginPhone", objSetting.dataObject.getString("login_phone"));
+                map.put("loginPassphrase", objSetting.dataObject.getString("login_passphrase"));
+                map.put("receiverPhone", objSetting.dataObject.getString("receiver_number"));
+                map.put("message", "Es ist ein Fehler (Code: " + exitCode + ") beim Systemupdate von " + hostname + " aufgetreten!");
+                whatsappTemplate.sendPhoneMessage();
             }
         }
     }

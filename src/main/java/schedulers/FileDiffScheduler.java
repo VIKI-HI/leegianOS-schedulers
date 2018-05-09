@@ -114,7 +114,7 @@ public class FileDiffScheduler implements IScheduler {
 
     @Override
     public TimeData scheduler_timer() {
-        return new TimeData(10, 30, TimeUnit.SECONDS);
+        return new TimeData(5, 5, TimeUnit.SECONDS);
     }
 
     @Override

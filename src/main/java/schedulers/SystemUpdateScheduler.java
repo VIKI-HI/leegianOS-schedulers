@@ -38,7 +38,7 @@ public class SystemUpdateScheduler implements IScheduler {
     public void scheduler() {
 
         OBJSetting objSetting = new GetSetting("scheduler.systemupdate.hostnames").getSetting();
-        LeegianOSApp.logger(prefix + "updateSystem->" + "prepare");
+        LeegianOSApp.logger(prefix + "updateSystem->" + "prepare", true);
         for (int i = 0; i < objSetting.dataObject.getJSONArray("host_names").length(); i++) {
             JSONObject object = objSetting.dataObject.getJSONArray("host_names").getJSONObject(i);
 
@@ -49,7 +49,7 @@ public class SystemUpdateScheduler implements IScheduler {
             unixTemplate.setEnv(schedulerSkillClient, null, secondarySkill);
             map.put("hostName", object.getString("host_name"));
             map.put("port", object.getInt("port"));
-            LeegianOSApp.logger(prefix + "updateSystem->" + object.getString("host_name") + "->" + "upgrade");
+            LeegianOSApp.logger(prefix + "updateSystem->" + object.getString("host_name") + ":" + object.getInt("port") + "->" + "upgrade", true);
             unixTemplate.upgradeUnixSystem();
         }
     }
@@ -60,7 +60,8 @@ public class SystemUpdateScheduler implements IScheduler {
             JSONObject jsonObject = data.removeFirst();
             int exitCode = jsonObject.getJSONObject("dataValues").getInt("exitCode");
             String hostname = jsonObject.getJSONObject("dataValues").getString("hostname");
-
+            int port = jsonObject.getJSONObject("dataValues").getInt("port");
+            LeegianOSApp.logger(prefix + "updateSystem->" + hostname + ":" + port + "->" + "complete->::" + exitCode, true);
             if (exitCode != 0) {
                 SchedulerSkillClient schedulerSkillClient = (SchedulerSkillClient) LeegianOSApp.leegianOSAppInstance.skillClientList.get(schedulerUUID());
                 WhatsappTemplate whatsappTemplate = new WhatsappTemplate();

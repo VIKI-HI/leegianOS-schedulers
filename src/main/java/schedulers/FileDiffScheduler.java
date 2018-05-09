@@ -50,22 +50,22 @@ public class FileDiffScheduler implements IScheduler {
 
                 String md_5 = getMD5(classFile);
                 // todo check if file is deleted
-                LeegianOSApp.logger(prefix + "checkHashsum->" + iSkillClass.getSimpleName() + "->" + md_5);
+                LeegianOSApp.logger(prefix + "checkHashsum->" + iSkillClass.getSimpleName() + "->" + md_5, false);
                 if (this.skill_md5.containsKey(iSkillClass.getSimpleName())) {
                     if (this.skill_md5.get(iSkillClass.getSimpleName()).equalsIgnoreCase(md_5)) {
-                        LeegianOSApp.logger(prefix + "checkHashsum->" + iSkillClass.getSimpleName() + "->" + "no changes");
+                        LeegianOSApp.logger(prefix + "checkHashsum->" + iSkillClass.getSimpleName() + "->" + "no changes", false);
                     } else {
                         this.skill_md5.put(iSkillClass.getSimpleName(), md_5);
-                        LeegianOSApp.logger(prefix + "checkHashsum->" + iSkillClass.getSimpleName() + "->" + "changes detected");
+                        LeegianOSApp.logger(prefix + "checkHashsum->" + iSkillClass.getSimpleName() + "->" + "changes detected", true);
                         LeegianOSApp.leegianOSAppInstance.skillProcessor.loadSkill(iSkillClass, false);
                     }
                 } else {
                     this.skill_md5.put(iSkillClass.getSimpleName(), md_5);
                     if (!LeegianOSApp.leegianOSAppInstance.skillProcessor.skillList.containsKey(iSkillClass.getSimpleName())) {
-                        LeegianOSApp.logger(prefix + "checkHashsum->" + iSkillClass.getSimpleName() + "->" + "new checksum");
+                        LeegianOSApp.logger(prefix + "checkHashsum->" + iSkillClass.getSimpleName() + "->" + "new checksum", true);
                         LeegianOSApp.leegianOSAppInstance.skillProcessor.loadSkill(iSkillClass, false);
                     } else {
-                        LeegianOSApp.logger(prefix + "checkHashsum->" + iSkillClass.getSimpleName() + "->" + "initial checksum");
+                        LeegianOSApp.logger(prefix + "checkHashsum->" + iSkillClass.getSimpleName() + "->" + "initial checksum", false);
                     }
                 }
             } catch (ClassNotFoundException | MalformedURLException e) {
@@ -83,22 +83,22 @@ public class FileDiffScheduler implements IScheduler {
 
                 String md_5 = getMD5(classFile);
                 // todo check if file is deleted
-                LeegianOSApp.logger(prefix + "checkHashsum->" + iSchedulerClass.getSimpleName() + "->" + md_5);
+                LeegianOSApp.logger(prefix + "checkHashsum->" + iSchedulerClass.getSimpleName() + "->" + md_5, false);
                 if (this.scheduler_md5.containsKey(iScheduler.schedulerUUID())) {
                     if (this.scheduler_md5.get(iScheduler.schedulerUUID()).equalsIgnoreCase(md_5)) {
-                        LeegianOSApp.logger(prefix + "checkHashsum->" + iSchedulerClass.getSimpleName() + "->" + "no changes");
+                        LeegianOSApp.logger(prefix + "checkHashsum->" + iSchedulerClass.getSimpleName() + "->" + "no changes", false);
                     } else {
                         this.scheduler_md5.put(iScheduler.schedulerUUID(), md_5);
-                        LeegianOSApp.logger(prefix + "checkHashsum->" + iSchedulerClass.getSimpleName() + "->" + "changes detected");
+                        LeegianOSApp.logger(prefix + "checkHashsum->" + iSchedulerClass.getSimpleName() + "->" + "changes detected", true);
                         LeegianOSApp.leegianOSAppInstance.schedulerProcessor.loadScheduler(iScheduler.schedulerUUID(), iSchedulerClass, false);
                     }
                 } else {
                     this.scheduler_md5.put(iScheduler.schedulerUUID(), md_5);
                     if (!LeegianOSApp.leegianOSAppInstance.schedulerProcessor.schedulersList.containsKey(iScheduler.schedulerUUID())) {
-                        LeegianOSApp.logger(prefix + "checkHashsum->" + iSchedulerClass.getSimpleName() + "->" + "new checksum");
+                        LeegianOSApp.logger(prefix + "checkHashsum->" + iSchedulerClass.getSimpleName() + "->" + "new checksum", true);
                         LeegianOSApp.leegianOSAppInstance.schedulerProcessor.loadScheduler(iScheduler.schedulerUUID(), iSchedulerClass, false);
                     } else {
-                        LeegianOSApp.logger(prefix + "checkHashsum->" + iSchedulerClass.getSimpleName() + "->" + "initial checksum");
+                        LeegianOSApp.logger(prefix + "checkHashsum->" + iSchedulerClass.getSimpleName() + "->" + "initial checksum", false);
                     }
                 }
             } catch (ClassNotFoundException | MalformedURLException | IllegalAccessException | InstantiationException e) {

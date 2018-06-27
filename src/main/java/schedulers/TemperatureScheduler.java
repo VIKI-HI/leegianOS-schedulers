@@ -32,7 +32,7 @@ public class TemperatureScheduler implements IScheduler {
 
     private boolean alive = false;
     private LinkedList<JSONObject> data = new LinkedList<>();
-    private int[] heat = {65, 70, 80};
+    private int[] heat = {70, 80, 90};
     private int last = 0;
 
     @Override

@@ -73,7 +73,7 @@ public class SystemUpdateScheduler implements IScheduler {
                 map.put("loginPhone", objSetting.dataObject.getString("login_phone"));
                 map.put("loginPassphrase", objSetting.dataObject.getString("login_passphrase"));
                 map.put("receiverPhone", objSetting.dataObject.getString("receiver_number"));
-                map.put("message", "Es ist ein Fehler (Code: " + exitCode + ") beim Systemupdate von " + hostname + " aufgetreten!");
+                map.put("message", "Es ist ein Fehler (Code: " + exitCode + ") beim Systemupdate von " + hostname + ":" + port + " aufgetreten!");
                 whatsappTemplate.sendPhoneMessage();
             }
         }
